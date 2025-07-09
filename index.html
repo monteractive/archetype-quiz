@@ -93,37 +93,63 @@
         let bestMatchedArchetype = null;
         let radarChartInstance = null; // To store the Chart.js instance
 
-        // Archetype definitions with their descriptions and associated keywords/categories
+        // Archetype definitions with their descriptions, monikers, and links
         const archetypes = {
             'Visual Specialist': {
-                description: 'Detail-obsessed, focused on polished, pixel-perfect design.',
+                moniker: 'The Artisan',
+                description: 'The Visual Specialist is detail-obsessed and focused on polished, pixel-perfect, and consistent designs. They are experts in visual design and elevate the quality of any product they touch.',
                 keywords: ['Visual Preferences and Detail Orientation'],
-                image: 'https://placehold.co/200x200/FFD700/000000?text=Visual+Specialist' // Placeholder image
+                image: 'https://content-fetcher.googleusercontent.com/static/files/visual%20specialist.png-1a469cec-4b38-45c2-b492-11f592bb927f', // Updated image URL
+                link: 'https://roblox.atlassian.net/wiki/x/9wPI2'
             },
             'Strategist': {
-                description: 'Fueled by imagination, excels at long-term thinking and innovation.',
+                moniker: 'The Pioneer',
+                description: 'Fueled by imagination and creativity, the Strategist excels at long term thinking, concept design, strategy and innovation. They have a deep understanding of the industry and use effective techniques to sell ideas.',
                 keywords: ['Innovation and Strategic Thinking'],
-                image: 'https://placehold.co/200x200/FFA500/000000?text=Strategist' // Placeholder image
+                image: 'https://content-fetcher.googleusercontent.com/static/files/strategist.png-58a358ed-34e7-4ebb-8ce8-aac715762da2', // Updated image URL
+                link: 'https://roblox.atlassian.net/wiki/x/WgPG2'
             },
-            'Technician': {
-                description: 'Technical expert, excels at interactive prototypes.',
+            'Interaction Expert': {
+                moniker: 'The Conductor',
+                description: 'An interaction expert creates intuitive user journeys with carefully designed happy paths, guiding users with thoughtful hierarchy, micro-interactions, transitions, and animations. They possess deep knowledge of platform-specific interaction patterns and accessibility guidelines.',
+                keywords: ['User Journeys and Interaction Design'],
+                image: 'https://content-fetcher.googleusercontent.com/static/files/interaction%20expert.png-e1d4c9a3-e069-44e9-9d72-bc9e51718571', // Updated image URL
+                link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3621159050/Design+Creative+Archetypes#Interaction-Expert.1'
+            },
+            'Prototyper': {
+                moniker: 'The Gadgeteer',
+                description: 'Prototyping experts excel at rapid iteration. Typically proficient with multiple prototyping tools and skillfully select the appropriate fidelity level for different stages of the design process. They use prototypes to communicate vision and collect early feedback that drives design decisions.',
                 keywords: ['Technical Inclinations and Prototyping'],
-                image: 'https://placehold.co/200x200/8A2BE2/FFFFFF?text=Technician' // Placeholder image
+                image: 'https://content-fetcher.googleusercontent.com/static/files/prototyper.png-7914c7e0-2fef-43ea-8e6e-1c156fc36a14', // Updated image URL
+                link: 'https://roblox.atlassian.net/wiki/x/koPG2'
             },
-            'Systems Thinker': {
-                description: 'Simplifies complex systems, connects the dots across teams.',
+            'Systems Expert': {
+                moniker: 'The Architect',
+                description: 'System experts simplify the most complex systems and connect the dots across teams. They are experts at zooming in and out, always considering the larger context.',
                 keywords: ['Systems Thinking and Collaboration'],
-                image: 'https://placehold.co/200x200/008080/FFFFFF?text=Systems+Thinker' // Placeholder image
+                image: 'https://content-fetcher.googleusercontent.com/static/files/systems%20expert.png-68dee26f-ab76-41fe-a046-550b705628c6', // Updated image URL
+                link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3636986897'
             },
-            'Connector': {
-                description: 'Stakeholder whisperer, strives for common solutions.',
+            'Communication Expert': {
+                moniker: 'Nexus',
+                description: 'The Communication Expert is a master storyteller. They know how to frame even the toughest topics persuasively, presenting complex or challenging ideas in a compelling and accessible way that helps teams arrive at a unified solution.',
                 keywords: ['Communication and Stakeholder Management'],
-                image: 'https://placehold.co/200x200/FF6347/FFFFFF?text=Connector' // Placeholder image
+                image: 'https://placehold.co/200x200/FF6347/FFFFFF?text=Communication+Expert', // Placeholder image (no specific image provided for this one)
+                link: 'https://roblox.atlassian.net/wiki/x/8ofI2'
             },
-            'Scholar': {
-                description: 'Excels at interrogating data, revealing insights.',
+            'Insights Analyst': {
+                moniker: 'The Scholar',
+                description: 'The Insights Expert excels at interrogating data and revealing new insights that power innovation. They have a deep well of knowledge and are continuously sharing it to elevate work around them.',
                 keywords: ['Research and Knowledge Building'],
-                image: 'https://placehold.co/200x200/6A5ACD/FFFFFF?text=Scholar' // Placeholder image
+                image: 'https://placehold.co/200x200/6A5ACD/FFFFFF?text=Insights+Analyst', // Placeholder image (no specific image provided for this one)
+                link: 'https://roblox.atlassian.net/wiki/x/qAS-2'
+            },
+            'Voice Expert': {
+                moniker: 'The Trendsetter',
+                description: 'A Voice Expert is a master of identity and strategy. They ensure consistent and compelling communications across all channels. They understand market trends and customer needs, translating them into a unique and resonant voice.',
+                keywords: ['Content and Brand Voice'],
+                image: 'https://content-fetcher.googleusercontent.com/static/files/voice%20expert.png-676313d2-a7a5-4fae-b913-cc7cc38f7e05', // Updated image URL
+                link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3637085048'
             },
         };
 
@@ -131,69 +157,57 @@
         // This is calculated by summing the max points each category can get from all questions.
         // Checkbox options contribute +1, Radio options contribute +2.
         const maxPossibleScores = {
-            'Visual Specialist': 19, // (Q1:2, Q2:2, Q3:2, Q4:2, Q5:2, Q6:2, Q7:1, Q8:2, Q9:2, Q10:2)
-            'Strategist': 21,       // (Q1:3, Q2:2, Q3:3, Q4:2, Q5:2, Q6:2, Q7:1, Q8:2, Q9:2, Q10:2)
-            'Technician': 19,       // (Q1:2, Q2:2, Q3:2, Q4:2, Q5:2, Q6:2, Q7:1, Q8:2, Q9:2, Q10:2)
-            'Systems Thinker': 21,  // (Q1:3, Q2:2, Q3:3, Q4:2, Q5:2, Q6:2, Q7:1, Q8:2, Q9:2, Q10:2)
-            'Connector': 19,        // (Q1:3, Q2:2, Q3:3, Q4:2, Q5:2, Q6:2, Q7:1, Q8:0, Q9:2, Q10:2) - Q8 has no Connector option
-            'Scholar': 17,          // (Q1:2, Q2:2, Q3:2, Q4:2, Q5:2, Q6:2, Q7:1, Q8:0, Q9:2, Q10:2) - Q8 has no Scholar option
+            'Visual Specialist': 17,
+            'Strategist': 17,
+            'Interaction Expert': 17,
+            'Prototyper': 17,
+            'Systems Expert': 17,
+            'Communication Expert': 17,
+            'Insights Analyst': 17,
+            'Voice Expert': 17,
         };
 
         // Define the questionnaire structure
         const questionnaire = [
             {
                 id: 'q1',
-                question: 'Of the following options, what do you consider most important when it comes to Design? Please choose all that apply.',
+                question: 'Of the following options, what do you consider MOST important when it comes to Design? (Please choose all that apply.)',
                 type: 'checkbox',
                 options: [
-                    { text: 'Analyzing complex systems', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Identifying connections between different systems, projects or products', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Collaborating with others and finding solutions that work for everyone.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Thinking about the long-term implications of design decisions', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Navigating ambiguity', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Exploring new ideas?', category: 'Innovation and Strategic Thinking' },
-                    { text: 'The technical aspects of design implementation', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Creating interactive prototypes to test and refine designs', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'The visual details of a design', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Ensuring consistency in design elements', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Facilitating discussions', category: 'Communication and Stakeholder Management' },
-                    { text: 'Resolving conflicting viewpoints', category: 'Communication and Stakeholder Management' },
-                    { text: 'Creating a collaborative environment', category: 'Communication and Stakeholder Management' },
-                    { text: 'Engaging with research and gathering information to inform my designs', category: 'Research and Knowledge Building' },
-                    { text: 'Learning new things and expanding my knowledge', category: 'Research and Knowledge Building' },
+                    { text: 'Analyzing complex systems and identifying connections between different systems, projects, or products.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Thinking about the long-term implications of design decisions and navigating ambiguity.', category: 'Innovation and Strategic Thinking' },
+                    { text: 'Creating intuitive user journeys with thoughtful hierarchy, micro-interactions, and animations.', category: 'User Journeys and Interaction Design' },
+                    { text: 'The technical aspects of design implementation and creating interactive prototypes to test and refine designs.', category: 'Technical Inclinations and Prototyping' },
+                    { text: 'The visual details of a design, ensuring consistency in design elements, and creating beautiful, polished interfaces.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Facilitating discussions, resolving conflicting viewpoints, and creating a collaborative environment.', category: 'Communication and Stakeholder Management' },
+                    { text: 'Engaging with research and gathering information to inform designs, and interrogating data to reveal insights.', category: 'Research and Knowledge Building' },
+                    { text: 'Crafting compelling and consistent communication across different channels and translating market trends into a unified voice.', category: 'Content and Brand Voice' },
                 ],
             },
             {
                 id: 'q2',
-                question: 'Of the following options, what do you consider the MOST important when it comes to Design? Please choose only one.',
+                question: 'Of the following options, what do you consider the MOST important when it comes to Design? (Please choose only one.)',
                 type: 'radio',
                 options: [], // Piped in from Q1
             },
             {
                 id: 'q3',
-                question: 'Of the following options, what do you most enjoy doing? Please choose all that apply.',
+                question: 'Of the following options, what do you most ENJOY doing? (Please choose all that apply.)',
                 type: 'checkbox',
                 options: [
-                    { text: 'Analyzing complex systems', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Identifying connections between different systems, projects or products', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Collaborating with others and finding solutions that work for everyone.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Thinking about the long-term implications of design decisions', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Navigating ambiguity', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Exploring new ideas?', category: 'Innovation and Strategic Thinking' },
-                    { text: 'The technical aspects of design implementation', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Creating interactive prototypes to test and refine designs', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'The visual details of a design', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Ensuring consistency in design elements', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Facilitating discussions', category: 'Communication and Stakeholder Management' },
-                    { text: 'Resolving conflicting viewpoints', category: 'Communication and Stakeholder Management' },
-                    { text: 'Creating a collaborative environment', category: 'Communication and Stakeholder Management' },
-                    { text: 'Engaging with research and gathering information to inform my designs', category: 'Research and Knowledge Building' },
-                    { text: 'Learning new things and expanding my knowledge', category: 'Research and Knowledge Building' },
+                    { text: 'Analyzing complex systems and identifying connections between different systems, projects, or products.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Thinking about the long-term implications of design decisions and exploring new ideas.', category: 'Innovation and Strategic Thinking' },
+                    { text: 'Creating intuitive user journeys and improving user flows and information architecture.', category: 'User Journeys and Interaction Design' },
+                    { text: 'The technical aspects of design implementation and creating interactive prototypes to test and refine designs.', category: 'Technical Inclinations and Prototyping' },
+                    { text: 'Paying close attention to typography, color, and layout, and creating beautiful and polished interfaces.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Facilitating discussions, resolving conflicting viewpoints, and creating a collaborative environment.', category: 'Communication and Stakeholder Management' },
+                    { text: 'Engaging with research and gathering information to inform designs, and learning new things and expanding knowledge.', category: 'Research and Knowledge Building' },
+                    { text: 'Developing brand identity and ensuring consistent and compelling communications across channels.', category: 'Content and Brand Voice' },
                 ],
             },
             {
                 id: 'q4',
-                question: 'Of the following options, what do you enjoy doing the MOST? Please choose only one.',
+                question: 'Of the following options, what do you ENJOY doing the MOST? (Please choose only one.)',
                 type: 'radio',
                 options: [], // Piped in from Q3
             },
@@ -203,12 +217,14 @@
                 type: 'radio',
                 hasOtherInput: true, // This question has an "Other" input
                 options: [
-                    { text: 'The overall strategy and vision.', category: 'Innovation and Strategic Thinking' },
                     { text: 'The visual aesthetics and polish.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'The overall strategy and vision.', category: 'Innovation and Strategic Thinking' },
                     { text: 'The interactive functionality and technical feasibility.', category: 'Technical Inclinations and Prototyping' },
                     { text: 'The system\'s logic and connections to other parts.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'How well it aligns with stakeholder expectations.', category: 'Communication and Stakeholder Management' },
+                    { text: 'How well it aligns with stakeholder expectations and communicates effectively.', category: 'Communication and Stakeholder Management' },
                     { text: 'The underlying data and user insights.', category: 'Research and Knowledge Building' },
+                    { text: 'The clarity and consistency of the messaging and tone.', category: 'Content and Brand Voice' },
+                    { text: 'The intuitive flow and ease of interaction.', category: 'User Journeys and Interaction Design' },
                     { text: 'Other (please specify)', category: null, value: 'other_specify' }, // Added value for "Other"
                 ],
             },
@@ -217,26 +233,30 @@
                 question: 'When starting a new project, what do you MOST prefer to do first?',
                 type: 'radio',
                 options: [
-                    { text: 'Define the visual specifications.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Define the visual specifications and detailed UI.', category: 'Visual Preferences and Detail Orientation' },
                     { text: 'Brainstorm innovative concepts and strategies.', category: 'Innovation and Strategic Thinking' },
                     { text: 'Investigate the technical constraints and opportunities.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Analyze how this project fits into the larger ecosystem.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Meet with stakeholders to gather different perspectives.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Research user needs and market trends.', category: 'Research and Knowledge Building' },
+                    { text: 'Analyze how this project fits into the larger ecosystem and simplify complex systems.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Meet with stakeholders to gather different perspectives and build consensus.', category: 'Communication and Stakeholder Management' },
+                    { text: 'Research user needs and market trends, and interrogate existing data.', category: 'Research and Knowledge Building' },
+                    { text: 'Outline the key messages and desired tone of voice.', category: 'Content and Brand Voice' },
+                    { text: 'Map out user flows and define interaction patterns.', category: 'User Journeys and Interaction Design' },
                 ],
             },
             {
                 id: 'q7',
-                question: 'What are your preferred design tools? Please choose all that apply.',
+                question: 'What are your preferred design tools? (Please choose all that apply.)',
                 type: 'checkbox',
                 hasOtherInput: true, // This question has an "Other" input
                 options: [
-                    { text: 'Primarily visual design software (e.g., Figma for mockups).', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Tools for strategy and presentations (e.g., Figjam, Keynote).', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Prototyping and coding tools (e.g., Framer, code editors).', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Tools for system mapping and documentation.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Communication and collaboration platforms.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Data analysis and research tools.', category: 'Research and Knowledge Building' },
+                    { text: 'Primarily visual design software (e.g., Figma for mockups, Adobe Creative Suite).', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Tools for strategy and presentations (e.g., Figjam, Miro, Keynote).', category: 'Innovation and Strategic Thinking' },
+                    { text: 'Prototyping and coding tools (e.g., Framer, Principle, code editors, Webflow).', category: 'Technical Inclinations and Prototyping' },
+                    { text: 'Tools for system mapping, architecture diagrams, and documentation.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Communication and collaboration platforms (e.g., Slack, Notion, Asana for team alignment).', category: 'Communication and Stakeholder Management' },
+                    { text: 'Data analysis and research tools (e.g., user testing platforms, analytics dashboards, survey tools).', category: 'Research and Knowledge Building' },
+                    { text: 'Tools for content creation and voice guidelines (e.g., content management systems, style guides).', category: 'Content and Brand Voice' },
+                    { text: 'Tools for user flow mapping and interaction design (e.g., Figma for flows, Axure).', category: 'User Journeys and Interaction Design' },
                     { text: 'Other (please specify)', category: null, value: 'other_specify' }, // Added value for "Other"
                 ],
             },
@@ -245,10 +265,14 @@
                 question: 'Of the below options, which do you enjoy the most?',
                 type: 'radio',
                 options: [
-                    { text: 'Designing detailed visual interfaces.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Developing a comprehensive design strategy.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Building a complex interactive prototype.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Optimizing a design system for efficiency.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Designing detailed visual interfaces and ensuring pixel-perfect execution.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Developing a comprehensive design strategy and envisioning future possibilities.', category: 'Innovation and Strategic Thinking' },
+                    { text: 'Building a complex interactive prototype and exploring technical solutions.', category: 'Technical Inclinations and Prototyping' },
+                    { text: 'Optimizing a design system for efficiency and connecting the dots across teams.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Facilitating productive discussions and finding common solutions with stakeholders.', category: 'Communication and Stakeholder Management' },
+                    { text: 'Conducting deep research and analysis to generate actionable insights.', category: 'Research and Knowledge Building' },
+                    { text: 'Crafting clear, consistent, and impactful language and messaging.', category: 'Content and Brand Voice' },
+                    { text: 'Ensuring intuitive and engaging user experiences through interaction design.', category: 'User Journeys and Interaction Design' },
                 ],
             },
             {
@@ -256,25 +280,29 @@
                 question: 'When faced with differing opinions on a design, what action are you most likely to take?',
                 type: 'radio',
                 options: [
-                    { text: 'Defend the visual design rationale.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Focus on the overall strategic goals.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Explore the technical implications of each option.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Analyze the impact on the larger system.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Seek common ground and facilitate a compromise.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Present data and research to support a decision.', category: 'Research and Knowledge Building' },
+                    { text: 'Defend the visual design rationale and adherence to style guides.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Focus on the overall strategic goals and long-term vision to guide the discussion.', category: 'Innovation and Strategic Thinking' },
+                    { text: 'Explore the technical implications of each option and suggest prototype iterations.', category: 'Technical Inclinations and Prototyping' },
+                    { text: 'Analyze the impact on the larger system and highlight interdependencies.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Seek common ground and facilitate a compromise that works for all stakeholders.', category: 'Communication and Stakeholder Management' },
+                    { text: 'Present data and research to support a decision and provide evidence-based recommendations.', category: 'Research and Knowledge Building' },
+                    { text: 'Reframe the discussion based on user-centric messaging and brand voice.', category: 'Content and Brand Voice' },
+                    { text: 'Walk through user flows and interaction patterns to demonstrate the impact of different choices.', category: 'User Journeys and Interaction Design' },
                 ],
             },
             {
                 id: 'q10',
-                question: 'Of the below options regarding design tasks, which one do you find the most motivating?',
+                question: 'Of the below options regarding design tasks, which one do you find the MOST motivating?',
                 type: 'radio',
                 options: [
-                    { text: 'Refining and polishing visual details.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Creating innovative and future-oriented concepts.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Solving technical challenges and building prototypes.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Improving the efficiency and scalability of a system.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Building consensus and fostering collaboration.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Deep research and analysis to generate insights.', category: 'Research and Knowledge Building' },
+                    { text: 'Refining and polishing visual details to achieve a pixel-perfect outcome.', category: 'Visual Preferences and Detail Orientation' },
+                    { text: 'Creating innovative and future-oriented concepts that solve complex problems.', category: 'Innovation and Strategic Thinking' },
+                    { text: 'Solving technical challenges and building functional prototypes.', category: 'Technical Inclinations and Prototyping' },
+                    { text: 'Improving the efficiency and scalability of a system by finding logical connections.', category: 'Systems Thinking and Collaboration' },
+                    { text: 'Building consensus and fostering collaboration across diverse teams.', category: 'Communication and Stakeholder Management' },
+                    { text: 'Deep research and analysis to generate insights and uncover user needs.', category: 'Research and Knowledge Building' },
+                    { text: 'Ensuring consistent and impactful communication that resonates with the audience.', category: 'Content and Brand Voice' },
+                    { text: 'Designing seamless and delightful user interactions.', category: 'User Journeys and Interaction Design' },
                 ],
             },
         ];
@@ -291,7 +319,6 @@
         const archetypeListUl = document.getElementById('archetype-list');
         const restartButton = document.getElementById('restart-button');
         const radarChartCanvas = document.getElementById('radarChart');
-        // Removed geminiInsightsSection and insightsContentDiv as they are no longer needed
 
         // --- Functions ---
 
@@ -453,7 +480,7 @@
                     alert('Please select an option before proceeding.');
                     return;
                 }
-                if (currentQ.id === 'q5' && userAnswers[currentQ.id] === 'Other (please specify)' && (!userAnswers[`${currentQ.id}_other_text`] || userAnswers[`${currentQ.id}_other_text`].trim() === '')) {
+                if (currentQ.hasOtherInput && userAnswers[currentQ.id] === 'Other (please specify)' && (!userAnswers[`${currentQ.id}_other_text`] || userAnswers[`${currentQ.id}_other_text`].trim() === '')) {
                     alert('Please specify your "Other" option.');
                     return;
                 }
@@ -463,7 +490,7 @@
                     alert('Please select at least one option before proceeding.');
                     return;
                 }
-                if (currentQ.id === 'q7' && userAnswers[currentQ.id].includes('Other (please specify)') && (!userAnswers[`${currentQ.id}_other_text`] || userAnswers[`${currentQ.id}_other_text`].trim() === '')) {
+                if (currentQ.hasOtherInput && userAnswers[currentQ.id].includes('Other (please specify)') && (!userAnswers[`${currentQ.id}_other_text`] || userAnswers[`${currentQ.id}_other_text`].trim() === '')) {
                     alert('Please specify your "Other" option.');
                     return;
                 }
@@ -558,22 +585,23 @@
         function showResults() {
             questionnaireSection.classList.add('hidden');
             resultsModal.classList.remove('hidden');
-            // Removed geminiInsightsSection.classList.add('hidden');
 
             // Display best match
             if (bestMatchedArchetype) {
+                const bestArchetypeData = archetypes[bestMatchedArchetype];
                 bestMatchSection.innerHTML = `
-                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">
-                        Your Best Match: ${bestMatchedArchetype} (${archetypePercentageScores[bestMatchedArchetype]}%)
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-2">
+                        Your Best Match: ${bestMatchedArchetype} (${bestArchetypeData.moniker})
                     </h3>
+                    <p class="text-xl font-bold text-blue-600 mb-3">${archetypePercentageScores[bestMatchedArchetype]}% Match</p>
                     <img
-                        src="${archetypes[bestMatchedArchetype]?.image}"
+                        src="${bestArchetypeData.image}"
                         alt="${bestMatchedArchetype}"
                         class="mx-auto mb-4 rounded-full w-32 h-32 object-cover border-4 border-blue-300"
                         onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=${bestMatchedArchetype.replace(/\s/g, '+')}';"
                     />
-                    <p class="text-lg text-gray-800 mb-4">${archetypes[bestMatchedArchetype]?.description}</p>
-                    <!-- Removed Get More Insights button -->
+                    <p class="text-lg text-gray-800 mb-4">${bestArchetypeData.description}</p>
+                    ${bestArchetypeData.link ? `<a href="${bestArchetypeData.link}" target="_blank" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">Learn More</a>` : ''}
                 `;
             }
 
@@ -637,7 +665,7 @@
             const sortedArchetypes = Object.entries(archetypePercentageScores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
             archetypeListUl.innerHTML = sortedArchetypes.map(([archetype, score]) => `
                 <li class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <span class="text-lg font-medium text-gray-700">${archetype}</span>
+                    <span class="text-lg font-medium text-gray-700">${archetype} (${archetypes[archetype]?.moniker})</span>
                     <span class="text-xl font-bold text-blue-600">${score}%</span>
                 </li>
             `).join('');
@@ -657,8 +685,6 @@
             resultsModal.classList.add('hidden');
             landingPageDiv.classList.remove('hidden'); // Go back to landing page
             questionnaireSection.classList.add('hidden'); // Ensure questionnaire is hidden
-            // Removed geminiInsightsSection.classList.add('hidden'); // Hide insights section on restart
-            // insightsContentDiv.innerHTML = ''; // Clear previous insights
             // No need to call renderQuestion here, as the landing page is shown
         }
 
