@@ -52,10 +52,10 @@
         <!-- Results Modal (initially hidden) -->
         <div id="results-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto">
             <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-                <h2 class="text-3xl font-bold mb-6 text-gray-900 text-center">Your Design Archetype Results</h2>
+                <!-- Removed "Your Design Archetype Results" title -->
 
                 <!-- Best Match Section -->
-                <div id="best-match-section" class="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200 text-center">
+                <div id="best-match-section" class="mb-8 p-6 bg-blue-50 rounded-xl border border-blue-200 text-left">
                     <!-- Best match content will be rendered here by JavaScript -->
                 </div>
 
@@ -67,13 +67,13 @@
                     </div>
                 </div>
 
-                <!-- Sorted List of Archetypes and Scores -->
-                <div class="mb-8">
+                <!-- Removed Sorted List of Archetypes and Scores -->
+                <!-- <div class="mb-8">
                     <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">All Archetype Scores</h3>
                     <ul id="archetype-list" class="space-y-3">
-                        <!-- Sorted list will be rendered here by JavaScript -->
+                        
                     </ul>
-                </div>
+                </div> -->
 
                 <div class="text-center mt-8">
                     <button id="restart-button" class="px-8 py-4 rounded-lg font-semibold bg-purple-600 text-white hover:bg-purple-700 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
@@ -99,56 +99,56 @@
                 moniker: 'The Artisan',
                 description: 'The Visual Specialist is detail-obsessed and focused on polished, pixel-perfect, and consistent designs. They are experts in visual design and elevate the quality of any product they touch.',
                 keywords: ['Visual Preferences and Detail Orientation'],
-                image: 'https://content-fetcher.googleusercontent.com/static/files/visual%20specialist.png-1a469cec-4b38-45c2-b492-11f592bb927f', // Updated image URL
+                image: 'images/visual%20specialist.png', // Updated image URL
                 link: 'https://roblox.atlassian.net/wiki/x/9wPI2'
             },
             'Strategist': {
                 moniker: 'The Pioneer',
                 description: 'Fueled by imagination and creativity, the Strategist excels at long term thinking, concept design, strategy and innovation. They have a deep understanding of the industry and use effective techniques to sell ideas.',
                 keywords: ['Innovation and Strategic Thinking'],
-                image: 'https://content-fetcher.googleusercontent.com/static/files/strategist.png-58a358ed-34e7-4ebb-8ce8-aac715762da2', // Updated image URL
+                image: 'images/strategist.png', // Updated image URL
                 link: 'https://roblox.atlassian.net/wiki/x/WgPG2'
             },
             'Interaction Expert': {
                 moniker: 'The Conductor',
                 description: 'An interaction expert creates intuitive user journeys with carefully designed happy paths, guiding users with thoughtful hierarchy, micro-interactions, transitions, and animations. They possess deep knowledge of platform-specific interaction patterns and accessibility guidelines.',
                 keywords: ['User Journeys and Interaction Design'],
-                image: 'https://content-fetcher.googleusercontent.com/static/files/interaction%20expert.png-e1d4c9a3-e069-44e9-9d72-bc9e51718571', // Updated image URL
+                image: 'images/interaction%20expert.png', // Updated image URL
                 link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3621159050/Design+Creative+Archetypes#Interaction-Expert.1'
             },
             'Prototyper': {
                 moniker: 'The Gadgeteer',
                 description: 'Prototyping experts excel at rapid iteration. Typically proficient with multiple prototyping tools and skillfully select the appropriate fidelity level for different stages of the design process. They use prototypes to communicate vision and collect early feedback that drives design decisions.',
                 keywords: ['Technical Inclinations and Prototyping'],
-                image: 'https://content-fetcher.googleusercontent.com/static/files/prototyper.png-7914c7e0-2fef-43ea-8e6e-1c156fc36a14', // Updated image URL
+                image: 'images/prototyper.png', // Updated image URL
                 link: 'https://roblox.atlassian.net/wiki/x/koPG2'
             },
             'Systems Expert': {
                 moniker: 'The Architect',
                 description: 'System experts simplify the most complex systems and connect the dots across teams. They are experts at zooming in and out, always considering the larger context.',
                 keywords: ['Systems Thinking and Collaboration'],
-                image: 'https://content-fetcher.googleusercontent.com/static/files/systems%20expert.png-68dee26f-ab76-41fe-a046-550b705628c6', // Updated image URL
+                image: 'images/systems%20expert.png', // Updated image URL
                 link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3636986897'
             },
             'Communication Expert': {
                 moniker: 'Nexus',
                 description: 'The Communication Expert is a master storyteller. They know how to frame even the toughest topics persuasively, presenting complex or challenging ideas in a compelling and accessible way that helps teams arrive at a unified solution.',
                 keywords: ['Communication and Stakeholder Management'],
-                image: 'https://placehold.co/200x200/FF6347/FFFFFF?text=Communication+Expert', // Placeholder image (no specific image provided for this one)
+                image: 'images/Communication%20Expert.png', // Placeholder image (no specific image provided for this one)
                 link: 'https://roblox.atlassian.net/wiki/x/8ofI2'
             },
             'Insights Analyst': {
                 moniker: 'The Scholar',
                 description: 'The Insights Expert excels at interrogating data and revealing new insights that power innovation. They have a deep well of knowledge and are continuously sharing it to elevate work around them.',
                 keywords: ['Research and Knowledge Building'],
-                image: 'https://placehold.co/200x200/6A5ACD/FFFFFF?text=Insights+Analyst', // Placeholder image (no specific image provided for this one)
+                image: 'images/Insights%20Analyst.png', // Placeholder image (no specific image provided for this one)
                 link: 'https://roblox.atlassian.net/wiki/x/qAS-2'
             },
             'Voice Expert': {
                 moniker: 'The Trendsetter',
                 description: 'A Voice Expert is a master of identity and strategy. They ensure consistent and compelling communications across all channels. They understand market trends and customer needs, translating them into a unique and resonant voice.',
                 keywords: ['Content and Brand Voice'],
-                image: 'https://content-fetcher.googleusercontent.com/static/files/voice%20expert.png-676313d2-a7a5-4fae-b913-cc7cc38f7e05', // Updated image URL
+                image: 'images/voice%20expert.png', // Updated image URL
                 link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3637085048'
             },
         };
@@ -171,7 +171,7 @@
         const questionnaire = [
             {
                 id: 'q1',
-                question: 'Of the following options, what do you consider important when it comes to Design? (Please choose all that apply.)',
+                question: 'Of the following options, what do you consider MOST important when it comes to Design? (Please choose all that apply.)',
                 type: 'checkbox',
                 options: [
                     { text: 'Analyzing complex systems and identifying connections between different systems, projects, or products.', category: 'Systems Thinking and Collaboration' },
@@ -186,13 +186,13 @@
             },
             {
                 id: 'q2',
-                question: 'Of the following options, what do you consider THE MOST important when it comes to Design? (Please choose only one.)',
+                question: 'Of the following options, what do you consider the MOST important when it comes to Design? (Please choose only one.)',
                 type: 'radio',
                 options: [], // Piped in from Q1
             },
             {
                 id: 'q3',
-                question: 'Of the following options, what do you ENJOY doing? (Please choose all that apply.)',
+                question: 'Of the following options, what do you MOST ENJOY doing? (Please choose all that apply.)',
                 type: 'checkbox',
                 options: [
                     { text: 'Analyzing complex systems and identifying connections between different systems, projects, or products.', category: 'Systems Thinking and Collaboration' },
@@ -213,8 +213,8 @@
             },
             {
                 id: 'q5',
-                question: 'When reviewing a design, what is important to you? (Please choose all that apply)',
-                type: 'checkbox',
+                question: 'When reviewing a design, what is MOST important to you? (Please choose all that apply.)',
+                type: 'checkbox', // Changed to checkbox
                 hasOtherInput: true, // This question has an "Other" input
                 options: [
                     { text: 'The visual aesthetics and polish.', category: 'Visual Preferences and Detail Orientation' },
@@ -230,7 +230,7 @@
             },
             {
                 id: 'q6',
-                question: 'When starting a new project, what do you MOST prefer to do first?',
+                question: 'When starting a new project, what do you MOST prefer to do first? (Please choose only one.)',
                 type: 'radio',
                 options: [
                     { text: 'Define the visual specifications and detailed UI.', category: 'Visual Preferences and Detail Orientation' },
@@ -262,8 +262,8 @@
             },
             {
                 id: 'q8',
-                question: 'Of the below options, which do you ENJOY doing the MOST?',
-                type: 'radio',
+                question: 'Of the below options, which do you MOST ENJOY? (Please choose only one.)',
+                type: 'radio', // Changed to checkbox
                 options: [
                     { text: 'Designing detailed visual interfaces and ensuring pixel-perfect execution.', category: 'Visual Preferences and Detail Orientation' },
                     { text: 'Developing a comprehensive design strategy and envisioning future possibilities.', category: 'Innovation and Strategic Thinking' },
@@ -277,8 +277,8 @@
             },
             {
                 id: 'q9',
-                question: 'When faced with differing opinions on a design, what action are you most likely to take?',
-                type: 'radio',
+                question: 'When faced with differing opinions on a design, what action are you MOST likely to take? (Please choose only one.)',
+                type: 'radio', // Changed to checkbox
                 options: [
                     { text: 'Defend the visual design rationale and adherence to style guides.', category: 'Visual Preferences and Detail Orientation' },
                     { text: 'Focus on the overall strategic goals and long-term vision to guide the discussion.', category: 'Innovation and Strategic Thinking' },
@@ -292,8 +292,8 @@
             },
             {
                 id: 'q10',
-                question: 'Of the below options regarding design tasks, which one do you find the MOST motivating?',
-                type: 'radio',
+                question: 'Of the below options regarding design tasks, which one do you find the MOST motivating? (Please choose only one.)',
+                type: 'radio', // Changed to checkbox
                 options: [
                     { text: 'Refining and polishing visual details to achieve a pixel-perfect outcome.', category: 'Visual Preferences and Detail Orientation' },
                     { text: 'Creating innovative and future-oriented concepts that solve complex problems.', category: 'Innovation and Strategic Thinking' },
@@ -316,7 +316,7 @@
         const questionnaireSection = document.getElementById('questionnaire-section');
         const resultsModal = document.getElementById('results-modal');
         const bestMatchSection = document.getElementById('best-match-section');
-        const archetypeListUl = document.getElementById('archetype-list');
+        const archetypeListUl = document.getElementById('archetype-list'); // This element is now unused but kept for consistency
         const restartButton = document.getElementById('restart-button');
         const radarChartCanvas = document.getElementById('radarChart');
 
@@ -590,18 +590,22 @@
             if (bestMatchedArchetype) {
                 const bestArchetypeData = archetypes[bestMatchedArchetype];
                 bestMatchSection.innerHTML = `
-                    <h3 class="text-2xl font-semibold text-blue-700 mb-2">
-                        Your Best Match: ${bestMatchedArchetype} (${bestArchetypeData.moniker})
-                    </h3>
-                    <p class="text-xl font-bold text-blue-600 mb-3">${archetypePercentageScores[bestMatchedArchetype]}% Match</p>
-                    <img
-                        src="${bestArchetypeData.image}"
-                        alt="${bestMatchedArchetype}"
-                        class="mx-auto mb-4 rounded-full w-32 h-32 object-cover border-4 border-blue-300"
-                        onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=${bestMatchedArchetype.replace(/\s/g, '+')}';"
-                    />
-                    <p class="text-lg text-gray-800 mb-4">${bestArchetypeData.description}</p>
-                    ${bestArchetypeData.link ? `<a href="${bestArchetypeData.link}" target="_blank" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">Learn More</a>` : ''}
+                    <div class="flex items-center mb-4">
+                        <img
+                            src="${bestArchetypeData.image}"
+                            alt="${bestMatchedArchetype}"
+                            class="w-24 h-24 object-cover mr-4"
+                            onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=${bestMatchedArchetype.replace(/\s/g, '+')}';"
+                        />
+                        <div class="flex-grow">
+                            <p class="text-sm text-gray-500">Your best match</p>
+                            <h3 class="text-3xl font-bold text-gray-800 leading-tight">${bestMatchedArchetype}</h3>
+                            <p class="text-lg text-gray-600">${bestArchetypeData.moniker}</p>
+                        </div>
+                        <p class="text-5xl font-bold text-gray-700 ml-auto">${archetypePercentageScores[bestMatchedArchetype]}%</p>
+                    </div>
+                    <p class="text-lg text-gray-800 mb-6">${bestArchetypeData.description}</p>
+                    ${bestArchetypeData.link ? `<a href="${bestArchetypeData.link}" target="_blank" class="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">Learn More</a>` : ''}
                 `;
             }
 
@@ -616,7 +620,7 @@
                     labels: Object.keys(archetypePercentageScores),
                     datasets: [
                         {
-                            label: 'Your Archetype Scores (%)',
+                            label: 'Your Archetype Scores',
                             data: Object.values(archetypePercentageScores),
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
@@ -631,6 +635,13 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    elements: {
+                        point: {
+                            radius: 3, // Smaller visible dot size
+                            hitRadius: 15, // Increased hit radius for larger hover area
+                            hoverRadius: 8 // Increased hover radius for visual feedback
+                        }
+                    },
                     scales: {
                         r: {
                             angleLines: {
@@ -639,21 +650,27 @@
                             suggestedMin: 0,
                             suggestedMax: 100, // Max for percentage
                             ticks: {
+                                display: false, // Do not display ticks on the axis
                                 beginAtZero: true,
                                 callback: function(value) {
-                                    return value + '%'; // Add percentage sign to ticks
+                                    return value;
                                 }
                             }
                         }
                     },
                     plugins: {
                         legend: {
-                            position: 'top',
+                            display: false, // Removed legend display
                         },
                         tooltip: {
                             callbacks: {
+                                title: function(context) {
+                                    // Display Archetype Name as title
+                                    return context[0].label;
+                                },
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + context.raw + '%'; // Add percentage sign to tooltip
+                                    // Display percentage as content
+                                    return context.raw + '%';
                                 }
                             }
                         }
@@ -661,14 +678,14 @@
                 }
             });
 
-            // Display sorted list of archetypes and scores
-            const sortedArchetypes = Object.entries(archetypePercentageScores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
-            archetypeListUl.innerHTML = sortedArchetypes.map(([archetype, score]) => `
-                <li class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <span class="text-lg font-medium text-gray-700">${archetype} (${archetypes[archetype]?.moniker})</span>
-                    <span class="text-xl font-bold text-blue-600">${score}%</span>
-                </li>
-            `).join('');
+            // Removed Display sorted list of archetypes and scores
+            // const sortedArchetypes = Object.entries(archetypePercentageScores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
+            // archetypeListUl.innerHTML = sortedArchetypes.map(([archetype, score]) => `
+            //     <li class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
+            //         <span class="text-lg font-medium text-gray-700">${archetype} (${archetypes[archetype]?.moniker})</span>
+            //         <span class="text-xl font-bold text-blue-600">${score}%</span>
+            //     </li>
+            // `).join('');
         }
 
         // Resets the questionnaire and hides results modal
