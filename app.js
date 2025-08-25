@@ -917,6 +917,23 @@ function renderQuestion() {
             }
         });
     });
+
+    // Auto-select if there's only one option
+    if (currentQ.options.length === 1) {
+        const singleOption = currentQ.options[0];
+        const optionText = singleOption.text;
+        
+        // Automatically select the single option
+        handleAnswerChange(currentQ.id, optionText, currentQ.type);
+        
+        // Find and check the corresponding input element
+        const inputElement = questionContentDiv.querySelector(`input[value="${optionText}"]`);
+        if (inputElement) {
+            inputElement.checked = true;
+        }
+        
+        // Note: User still needs to click "Next" to proceed
+    }
 }
 
 // Handles changes to answers and updates userAnswers object
