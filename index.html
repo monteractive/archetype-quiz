@@ -7,63 +7,76 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <style>
-        /* Custom styles for Inter font and general layout */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Hide scrollbar for aesthetic purposes */
-        body::-webkit-scrollbar {
-            display: none;
-        }
-        body {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
 </head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-    <div id="app-container" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+<body class="main-body min-h-screen flex items-center justify-center p-4">
+    <div id="app-container" class="p-8 w-full max-w-4xl">
         <!-- Landing Page Section -->
         <div id="landing-page" class="text-center">
-            <h1 class="text-4xl font-bold mb-6 text-gray-800">Which archetype am I?</h1>
-            <p class="text-lg text-gray-700 mb-8">By clarifying their creative identity, individuals can better align with projects, teams, and opportunities, while also defining clear paths for personal and professional development.</p>
-            <button id="start-quiz-button" class="px-8 py-4 rounded-lg font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            <h1 class="landing-header mb-8">Find your Design Archetype</h1>
+            <p class="landing-body mb-12 max-w-3xl mx-auto">By clarifying your creative identity, you will be able to better align with projects, teams, and opportunities, while also defining clear paths for personal and professional development.</p>
+            <button id="start-quiz-button" class="landing-button px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 Take the quiz
             </button>
         </div>
 
         <!-- Questionnaire Section (Initially Hidden) -->
-        <div id="questionnaire-section" class="hidden">
-            <!-- Header "Design Archetype Questionnaire" removed from here -->
-            <div id="question-content" class="mb-6">
-                <!-- Question will be rendered here by JavaScript -->
-            </div>
-            <div class="flex justify-between mt-8">
-                <button id="prev-button" class="px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-gray-300 text-gray-600 cursor-not-allowed">
-                    Previous
-                </button>
-                <button id="next-button" class="px-6 py-3 rounded-lg font-semibold bg-green-500 text-white hover:bg-green-600 shadow-md hover:shadow-lg transition-all duration-300">
-                    Next
-                </button>
+        <div id="questionnaire-section" class="hidden fixed inset-0 p-8 flex items-center justify-center">
+            <div class="questionnaire-container w-full max-w-3xl p-8">
+                <!-- Header "Design Archetype Questionnaire" removed from here -->
+                <div id="question-content" class="mb-6 questionnaire-text">
+                    <!-- Question will be rendered here by JavaScript -->
+                </div>
+                <div class="flex justify-end items-center gap-4 mt-8">
+                    <button id="prev-button" class="prev-button px-6 py-3 rounded-lg transition-all duration-300 mr-auto">
+                        Previous
+                    </button>
+                    <button id="next-button" class="next-button px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Results Modal (initially hidden) -->
-        <div id="results-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto">
-            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+        <div id="results-modal" class="hidden fixed inset-0 results-modal-bg flex items-center justify-center p-4 z-50 overflow-y-auto">
+            <div class="results-container p-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
                 <!-- Removed "Your Design Archetype Results" title -->
 
                 <!-- Best Match Section -->
-                <div id="best-match-section" class="mb-8 p-6 bg-blue-50 rounded-xl border border-blue-200 text-left">
+                <div id="best-match-section" class="mb-8 text-left">
                     <!-- Best match content will be rendered here by JavaScript -->
                 </div>
 
-                <!-- Star Diagram (Radar Chart) -->
+                <!-- Chart Container -->
                 <div class="mb-8">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Archetype Matching Diagram</h3>
-                    <div class="h-80">
-                        <canvas id="radarChart"></canvas>
+                    <h3 class="text-2xl font-semibold text-white mb-4 text-center">Your matches</h3>
+                    
+                    <!-- Chart Views Container with Toggle -->
+                    <div class="relative mb-6">
+                        <!-- Radar Chart View -->
+                        <div id="radar-view" class="chart-view hidden">
+                            <div class="w-full h-full">
+                                <canvas id="radarChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Percentage Bars View -->
+                        <div id="bars-view" class="chart-view">
+                            <div id="percentage-bars" class="space-y-3">
+                                <!-- Percentage bars will be rendered here by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Chart Toggle Switch - Bottom Right -->
+                        <div class="absolute bottom-4 right-4">
+                            <label class="chart-switch-container">
+                                <input type="checkbox" id="chart-toggle" class="chart-switch-input">
+                                <span class="chart-switch-slider"></span>
+                                <span class="chart-switch-label">Graph</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -76,654 +89,12 @@
                 </div> -->
 
                 <div class="text-center mt-8">
-                    <button id="restart-button" class="px-8 py-4 rounded-lg font-semibold bg-purple-600 text-white hover:bg-purple-700 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                        Restart Questionnaire
+                    <button id="restart-button" class="restart-button px-8 py-4 rounded-lg font-semibold text-white shadow-md hover:shadow-lg transition-all duration-300">
+                        Take the quiz again
                     </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Global variables for questionnaire state
-        let currentStep = 0;
-        let userAnswers = {};
-        let archetypeRawScores = {};
-        let archetypePercentageScores = {};
-        let bestMatchedArchetype = null;
-        let radarChartInstance = null; // To store the Chart.js instance
-
-        // Archetype definitions with their descriptions, monikers, and links
-        const archetypes = {
-            'Visual Specialist': {
-                moniker: 'The Artisan',
-                description: 'The Visual Specialist is detail-obsessed and focused on polished, pixel-perfect, and consistent designs. They are experts in visual design and elevate the quality of any product they touch.',
-                keywords: ['Visual Preferences and Detail Orientation'],
-                image: './images/visual%20specialist.png', // Updated image URL
-                link: 'https://roblox.atlassian.net/wiki/x/9wPI2'
-            },
-            'Strategist': {
-                moniker: 'The Pioneer',
-                description: 'Fueled by imagination and creativity, the Strategist excels at long term thinking, concept design, strategy and innovation. They have a deep understanding of the industry and use effective techniques to sell ideas.',
-                keywords: ['Innovation and Strategic Thinking'],
-                image: './images/strategist.png', // Updated image URL
-                link: 'https://roblox.atlassian.net/wiki/x/WgPG2'
-            },
-            'Interaction Expert': {
-                moniker: 'The Conductor',
-                description: 'An interaction expert creates intuitive user journeys with carefully designed happy paths, guiding users with thoughtful hierarchy, micro-interactions, transitions, and animations. They possess deep knowledge of platform-specific interaction patterns and accessibility guidelines.',
-                keywords: ['User Journeys and Interaction Design'],
-                image: './images/interaction%20expert.png', // Updated image URL
-                link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3621159050/Design+Creative+Archetypes#Interaction-Expert.1'
-            },
-            'Prototyper': {
-                moniker: 'The Gadgeteer',
-                description: 'Prototyping experts excel at rapid iteration. Typically proficient with multiple prototyping tools and skillfully select the appropriate fidelity level for different stages of the design process. They use prototypes to communicate vision and collect early feedback that drives design decisions.',
-                keywords: ['Technical Inclinations and Prototyping'],
-                image: './images/prototyper.png', // Updated image URL
-                link: 'https://roblox.atlassian.net/wiki/x/koPG2'
-            },
-            'Systems Expert': {
-                moniker: 'The Architect',
-                description: 'System experts simplify the most complex systems and connect the dots across teams. They are experts at zooming in and out, always considering the larger context.',
-                keywords: ['Systems Thinking and Collaboration'],
-                image: './images/systems%20expert.png', // Updated image URL
-                link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3636986897'
-            },
-            'Communication Expert': {
-                moniker: 'Nexus',
-                description: 'The Communication Expert is a master storyteller. They know how to frame even the toughest topics persuasively, presenting complex or challenging ideas in a compelling and accessible way that helps teams arrive at a unified solution.',
-                keywords: ['Communication and Stakeholder Management'],
-                image: './images/communication%20expert.png', // Placeholder image (no specific image provided for this one)
-                link: 'https://roblox.atlassian.net/wiki/x/8ofI2'
-            },
-            'Insights Analyst': {
-                moniker: 'The Scholar',
-                description: 'The Insights Expert excels at interrogating data and revealing new insights that power innovation. They have a deep well of knowledge and are continuously sharing it to elevate work around them.',
-                keywords: ['Research and Knowledge Building'],
-                image: './images/insights%20analyst.png', // Placeholder image (no specific image provided for this one)
-                link: 'https://roblox.atlassian.net/wiki/x/qAS-2'
-            },
-            'Voice Expert': {
-                moniker: 'The Trendsetter',
-                description: 'A Voice Expert is a master of identity and strategy. They ensure consistent and compelling communications across all channels. They understand market trends and customer needs, translating them into a unique and resonant voice.',
-                keywords: ['Content and Brand Voice'],
-                image: './images/voice%20expert.png', // Updated image URL
-                link: 'https://roblox.atlassian.net/wiki/spaces/DESIGN/pages/3637085048'
-            },
-        };
-
-        // Maximum possible scores for each archetype category based on the questionnaire structure
-        // This is calculated by summing the max points each category can get from all questions.
-        // Checkbox options contribute +1, Radio options contribute +2.
-        const maxPossibleScores = {
-            'Visual Specialist': 17,
-            'Strategist': 17,
-            'Interaction Expert': 17,
-            'Prototyper': 17,
-            'Systems Expert': 17,
-            'Communication Expert': 17,
-            'Insights Analyst': 17,
-            'Voice Expert': 17,
-        };
-
-        // Define the questionnaire structure
-        const questionnaire = [
-            {
-                id: 'q1',
-                question: 'Of the following options, what do you consider MOST important when it comes to Design? (Please choose all that apply.)',
-                type: 'checkbox',
-                options: [
-                    { text: 'Analyzing complex systems and identifying connections between different systems, projects, or products.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Thinking about the long-term implications of design decisions and navigating ambiguity.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Creating intuitive user journeys with thoughtful hierarchy, micro-interactions, and animations.', category: 'User Journeys and Interaction Design' },
-                    { text: 'The technical aspects of design implementation and creating interactive prototypes to test and refine designs.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'The visual details of a design, ensuring consistency in design elements, and creating beautiful, polished interfaces.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Facilitating discussions, resolving conflicting viewpoints, and creating a collaborative environment.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Engaging with research and gathering information to inform designs, and interrogating data to reveal insights.', category: 'Research and Knowledge Building' },
-                    { text: 'Crafting compelling and consistent communication across different channels and translating market trends into a unified voice.', category: 'Content and Brand Voice' },
-                ],
-            },
-            {
-                id: 'q2',
-                question: 'Of the following options, what do you consider the MOST important when it comes to Design? (Please choose only one.)',
-                type: 'radio',
-                options: [], // Piped in from Q1
-            },
-            {
-                id: 'q3',
-                question: 'Of the following options, what do you MOST ENJOY doing? (Please choose all that apply.)',
-                type: 'checkbox',
-                options: [
-                    { text: 'Analyzing complex systems and identifying connections between different systems, projects, or products.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Thinking about the long-term implications of design decisions and exploring new ideas.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Creating intuitive user journeys and improving user flows and information architecture.', category: 'User Journeys and Interaction Design' },
-                    { text: 'The technical aspects of design implementation and creating interactive prototypes to test and refine designs.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Paying close attention to typography, color, and layout, and creating beautiful and polished interfaces.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Facilitating discussions, resolving conflicting viewpoints, and creating a collaborative environment.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Engaging with research and gathering information to inform designs, and learning new things and expanding knowledge.', category: 'Research and Knowledge Building' },
-                    { text: 'Developing brand identity and ensuring consistent and compelling communications across channels.', category: 'Content and Brand Voice' },
-                ],
-            },
-            {
-                id: 'q4',
-                question: 'Of the following options, what do you ENJOY doing the MOST? (Please choose only one.)',
-                type: 'radio',
-                options: [], // Piped in from Q3
-            },
-            {
-                id: 'q5',
-                question: 'When reviewing a design, what is MOST important to you? (Please choose all that apply.)',
-                type: 'checkbox', // Changed to checkbox
-                hasOtherInput: true, // This question has an "Other" input
-                options: [
-                    { text: 'The visual aesthetics and polish.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'The overall strategy and vision.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'The interactive functionality and technical feasibility.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'The system\'s logic and connections to other parts.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'How well it aligns with stakeholder expectations and communicates effectively.', category: 'Communication and Stakeholder Management' },
-                    { text: 'The underlying data and user insights.', category: 'Research and Knowledge Building' },
-                    { text: 'The clarity and consistency of the messaging and tone.', category: 'Content and Brand Voice' },
-                    { text: 'The intuitive flow and ease of interaction.', category: 'User Journeys and Interaction Design' },
-                    { text: 'Other (please specify)', category: null, value: 'other_specify' }, // Added value for "Other"
-                ],
-            },
-            {
-                id: 'q6',
-                question: 'When starting a new project, what do you MOST prefer to do first? (Please choose only one.)',
-                type: 'radio',
-                options: [
-                    { text: 'Define the visual specifications and detailed UI.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Brainstorm innovative concepts and strategies.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Investigate the technical constraints and opportunities.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Analyze how this project fits into the larger ecosystem and simplify complex systems.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Meet with stakeholders to gather different perspectives and build consensus.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Research user needs and market trends, and interrogate existing data.', category: 'Research and Knowledge Building' },
-                    { text: 'Outline the key messages and desired tone of voice.', category: 'Content and Brand Voice' },
-                    { text: 'Map out user flows and define interaction patterns.', category: 'User Journeys and Interaction Design' },
-                ],
-            },
-            {
-                id: 'q7',
-                question: 'What are your preferred design tools? (Please choose all that apply.)',
-                type: 'checkbox',
-                hasOtherInput: true, // This question has an "Other" input
-                options: [
-                    { text: 'Primarily visual design software (e.g., Figma for mockups, Adobe Creative Suite).', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Tools for strategy and presentations (e.g., Figjam, Miro, Keynote).', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Prototyping and coding tools (e.g., Framer, Principle, code editors, Webflow).', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Tools for system mapping, architecture diagrams, and documentation.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Communication and collaboration platforms (e.g., Slack, Notion, Asana for team alignment).', category: 'Communication and Stakeholder Management' },
-                    { text: 'Data analysis and research tools (e.g., user testing platforms, analytics dashboards, survey tools).', category: 'Research and Knowledge Building' },
-                    { text: 'Tools for content creation and voice guidelines (e.g., content management systems, style guides).', category: 'Content and Brand Voice' },
-                    { text: 'Tools for user flow mapping and interaction design (e.g., Figma for flows, Axure).', category: 'User Journeys and Interaction Design' },
-                    { text: 'Other (please specify)', category: null, value: 'other_specify' }, // Added value for "Other"
-                ],
-            },
-            {
-                id: 'q8',
-                question: 'Of the below options, which do you MOST ENJOY? (Please choose only one.)',
-                type: 'radio', // Changed to checkbox
-                options: [
-                    { text: 'Designing detailed visual interfaces and ensuring pixel-perfect execution.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Developing a comprehensive design strategy and envisioning future possibilities.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Building a complex interactive prototype and exploring technical solutions.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Optimizing a design system for efficiency and connecting the dots across teams.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Facilitating productive discussions and finding common solutions with stakeholders.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Conducting deep research and analysis to generate actionable insights.', category: 'Research and Knowledge Building' },
-                    { text: 'Crafting clear, consistent, and impactful language and messaging.', category: 'Content and Brand Voice' },
-                    { text: 'Ensuring intuitive and engaging user experiences through interaction design.', category: 'User Journeys and Interaction Design' },
-                ],
-            },
-            {
-                id: 'q9',
-                question: 'When faced with differing opinions on a design, what action are you MOST likely to take? (Please choose only one.)',
-                type: 'radio', // Changed to checkbox
-                options: [
-                    { text: 'Defend the visual design rationale and adherence to style guides.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Focus on the overall strategic goals and long-term vision to guide the discussion.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Explore the technical implications of each option and suggest prototype iterations.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Analyze the impact on the larger system and highlight interdependencies.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Seek common ground and facilitate a compromise that works for all stakeholders.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Present data and research to support a decision and provide evidence-based recommendations.', category: 'Research and Knowledge Building' },
-                    { text: 'Reframe the discussion based on user-centric messaging and brand voice.', category: 'Content and Brand Voice' },
-                    { text: 'Walk through user flows and interaction patterns to demonstrate the impact of different choices.', category: 'User Journeys and Interaction Design' },
-                ],
-            },
-            {
-                id: 'q10',
-                question: 'Of the below options regarding design tasks, which one do you find the MOST motivating? (Please choose only one.)',
-                type: 'radio', // Changed to checkbox
-                options: [
-                    { text: 'Refining and polishing visual details to achieve a pixel-perfect outcome.', category: 'Visual Preferences and Detail Orientation' },
-                    { text: 'Creating innovative and future-oriented concepts that solve complex problems.', category: 'Innovation and Strategic Thinking' },
-                    { text: 'Solving technical challenges and building functional prototypes.', category: 'Technical Inclinations and Prototyping' },
-                    { text: 'Improving the efficiency and scalability of a system by finding logical connections.', category: 'Systems Thinking and Collaboration' },
-                    { text: 'Building consensus and fostering collaboration across diverse teams.', category: 'Communication and Stakeholder Management' },
-                    { text: 'Deep research and analysis to generate insights and uncover user needs.', category: 'Research and Knowledge Building' },
-                    { text: 'Ensuring consistent and impactful communication that resonates with the audience.', category: 'Content and Brand Voice' },
-                    { text: 'Designing seamless and delightful user interactions.', category: 'User Journeys and Interaction Design' },
-                ],
-            },
-        ];
-
-        // --- DOM Elements ---
-        const landingPageDiv = document.getElementById('landing-page');
-        const startQuizButton = document.getElementById('start-quiz-button');
-        const questionContentDiv = document.getElementById('question-content');
-        const prevButton = document.getElementById('prev-button');
-        const nextButton = document.getElementById('next-button');
-        const questionnaireSection = document.getElementById('questionnaire-section');
-        const resultsModal = document.getElementById('results-modal');
-        const bestMatchSection = document.getElementById('best-match-section');
-        const archetypeListUl = document.getElementById('archetype-list'); // This element is now unused but kept for consistency
-        const restartButton = document.getElementById('restart-button');
-        const radarChartCanvas = document.getElementById('radarChart');
-
-        // --- Functions ---
-
-        // Renders the current question based on currentStep
-        function renderQuestion() {
-            const currentQ = questionnaire[currentStep];
-            let optionsHtml = '';
-            let errorMessage = '';
-
-            // Dynamically populate options for Q2 and Q4
-            if (currentQ.id === 'q2') {
-                const selectedQ1Options = userAnswers['q1'] || [];
-                currentQ.options = questionnaire[0].options.filter(opt => selectedQ1Options.includes(opt.text));
-                if (currentQ.options.length === 0) {
-                    errorMessage = '<p class="text-red-500 text-sm mt-2">Please go back and select options in the first multi-choice question to see options here.</p>';
-                }
-            } else if (currentQ.id === 'q4') {
-                const selectedQ3Options = userAnswers['q3'] || [];
-                currentQ.options = questionnaire[2].options.filter(opt => selectedQ3Options.includes(opt.text));
-                if (currentQ.options.length === 0) {
-                    errorMessage = '<p class="text-red-500 text-sm mt-2">Please go back and select options in the previous multi-choice question to see options here.</p>';
-                }
-            }
-
-            if (currentQ.type === 'checkbox') {
-                optionsHtml = currentQ.options.map((option, index) => {
-                    const isOther = option.value === 'other_specify';
-                    const isChecked = (userAnswers[currentQ.id] && userAnswers[currentQ.id].includes(option.text));
-                    const otherInputId = `other-input-${currentQ.id}`;
-                    const otherTextInputValue = userAnswers[`${currentQ.id}_other_text`] || '';
-
-                    return `
-                        <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors duration-200">
-                            <input
-                                type="checkbox"
-                                name="${currentQ.id}"
-                                value="${option.text}"
-                                class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
-                                ${isChecked ? 'checked' : ''}
-                            />
-                            <span class="ml-3 text-gray-700">${option.text}</span>
-                        </label>
-                        ${isOther ? `
-                            <div id="${otherInputId}" class="ml-8 mt-2 ${isChecked ? '' : 'hidden'}">
-                                <input
-                                    type="text"
-                                    placeholder="Please specify"
-                                    class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    value="${otherTextInputValue}"
-                                    oninput="handleOtherTextInput('${currentQ.id}', this.value)"
-                                />
-                            </div>
-                        ` : ''}
-                    `;
-                }).join('');
-            } else if (currentQ.type === 'radio') {
-                optionsHtml = currentQ.options.map((option, index) => {
-                    const isOther = option.value === 'other_specify';
-                    const isSelected = userAnswers[currentQ.id] === option.text;
-                    const otherInputId = `other-input-${currentQ.id}`;
-                    const otherTextInputValue = userAnswers[`${currentQ.id}_other_text`] || '';
-
-                    return `
-                        <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors duration-200">
-                            <input
-                                type="radio"
-                                name="${currentQ.id}"
-                                value="${option.text}"
-                                class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-500"
-                                ${isSelected ? 'checked' : ''}
-                            />
-                            <span class="ml-3 text-gray-700">${option.text}</span>
-                        </label>
-                        ${isOther ? `
-                            <div id="${otherInputId}" class="ml-8 mt-2 ${isSelected ? '' : 'hidden'}">
-                                <input
-                                    type="text"
-                                    placeholder="Please specify"
-                                    class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    value="${otherTextInputValue}"
-                                    oninput="handleOtherTextInput('${currentQ.id}', this.value)"
-                                />
-                            </div>
-                        ` : ''}
-                    `;
-                }).join('');
-            }
-
-            questionContentDiv.innerHTML = `
-                <p class="text-lg text-gray-700 mb-4">${currentQ.question}</p>
-                <div class="space-y-3">
-                    ${optionsHtml}
-                </div>
-                ${errorMessage}
-            `;
-
-            // Update button states
-            prevButton.disabled = currentStep === 0;
-            nextButton.textContent = currentStep === questionnaire.length - 1 ? 'Submit' : 'Next';
-            if (currentStep === 0) {
-                prevButton.classList.add('bg-gray-300', 'text-gray-600', 'cursor-not-allowed');
-                prevButton.classList.remove('bg-blue-500', 'text-white', 'hover:bg-blue-600', 'shadow-md', 'hover:shadow-lg');
-            } else {
-                prevButton.classList.remove('bg-gray-300', 'text-gray-600', 'cursor-not-allowed');
-                prevButton.classList.add('bg-blue-500', 'text-white', 'hover:bg-blue-600', 'shadow-md', 'hover:shadow-lg');
-            }
-
-            // Add event listeners for the newly rendered inputs
-            const inputs = questionContentDiv.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-            inputs.forEach(input => {
-                input.addEventListener('change', (event) => {
-                    handleAnswerChange(currentQ.id, event.target.value, currentQ.type);
-                    // Toggle visibility of other input field if applicable
-                    if (currentQ.hasOtherInput) {
-                        const otherInputDiv = document.getElementById(`other-input-${currentQ.id}`);
-                        if (otherInputDiv) {
-                            const isOtherSelected = (currentQ.type === 'checkbox' && event.target.checked && event.target.value === 'Other (please specify)') ||
-                                                    (currentQ.type === 'radio' && event.target.value === 'Other (please specify)');
-                            otherInputDiv.classList.toggle('hidden', !isOtherSelected);
-                            if (!isOtherSelected) {
-                                // Clear the text input if "Other" is deselected
-                                userAnswers[`${currentQ.id}_other_text`] = '';
-                                const otherTextInput = otherInputDiv.querySelector('input[type="text"]');
-                                if (otherTextInput) otherTextInput.value = '';
-                            }
-                        }
-                    }
-                });
-            });
-        }
-
-        // Handles changes to answers and updates userAnswers object
-        function handleAnswerChange(questionId, value, type) {
-            if (type === 'checkbox') {
-                if (!userAnswers[questionId]) {
-                    userAnswers[questionId] = [];
-                }
-                if (userAnswers[questionId].includes(value)) {
-                    userAnswers[questionId] = userAnswers[questionId].filter(item => item !== value);
-                } else {
-                    userAnswers[questionId].push(value);
-                }
-            } else { // radio
-                userAnswers[questionId] = value;
-            }
-        }
-
-        // Handles input from the "Other (please specify)" text field
-        function handleOtherTextInput(questionId, text) {
-            userAnswers[`${questionId}_other_text`] = text;
-        }
-
-        // Navigates to the next question or submits the questionnaire
-        function nextStep() {
-            const currentQ = questionnaire[currentStep];
-            // Basic validation: ensure an answer is selected for radio buttons
-            if (currentQ.type === 'radio') {
-                if (!userAnswers[currentQ.id]) {
-                    alert('Please select an option before proceeding.');
-                    return;
-                }
-                if (currentQ.hasOtherInput && userAnswers[currentQ.id] === 'Other (please specify)' && (!userAnswers[`${currentQ.id}_other_text`] || userAnswers[`${currentQ.id}_other_text`].trim() === '')) {
-                    alert('Please specify your "Other" option.');
-                    return;
-                }
-            }
-            if (currentQ.type === 'checkbox') {
-                if (!userAnswers[currentQ.id] || userAnswers[currentQ.id].length === 0) {
-                    alert('Please select at least one option before proceeding.');
-                    return;
-                }
-                if (currentQ.hasOtherInput && userAnswers[currentQ.id].includes('Other (please specify)') && (!userAnswers[`${currentQ.id}_other_text`] || userAnswers[`${currentQ.id}_other_text`].trim() === '')) {
-                    alert('Please specify your "Other" option.');
-                    return;
-                }
-            }
-
-            if (currentStep < questionnaire.length - 1) {
-                currentStep++;
-                renderQuestion();
-            } else {
-                calculateScores();
-                showResults();
-            }
-        }
-
-        // Navigates to the previous question
-        function prevStep() {
-            if (currentStep > 0) {
-                currentStep--;
-                renderQuestion();
-            }
-        }
-
-        // Calculates archetype scores (raw and percentage)
-        function calculateScores() {
-            // Initialize all archetype raw scores to 0
-            Object.keys(archetypes).forEach(archetype => {
-                archetypeRawScores[archetype] = 0;
-            });
-
-            // Iterate through answers and update raw scores
-            Object.entries(userAnswers).forEach(([questionId, answerValue]) => {
-                // Skip 'other_text' entries directly
-                if (questionId.endsWith('_other_text')) return;
-
-                const questionDef = questionnaire.find(q => q.id === questionId);
-                if (!questionDef) return;
-
-                if (Array.isArray(answerValue)) { // Checkbox answers
-                    answerValue.forEach(selectedText => {
-                        const option = questionDef.options.find(opt => opt.text === selectedText);
-                        if (option && option.category) {
-                            Object.entries(archetypes).forEach(([archetype, data]) => {
-                                if (data.keywords.includes(option.category)) {
-                                    archetypeRawScores[archetype] = (archetypeRawScores[archetype] || 0) + 1;
-                                }
-                            });
-                        }
-                    });
-                } else { // Radio answers
-                    let originalOption = null;
-                    if (questionId === 'q2' && userAnswers['q1']) {
-                        originalOption = questionnaire[0].options.find(opt => opt.text === answerValue);
-                    } else if (questionId === 'q4' && userAnswers['q3']) {
-                        originalOption = questionnaire[2].options.find(opt => opt.text === answerValue);
-                    } else {
-                        originalOption = questionDef.options.find(opt => opt.text === answerValue);
-                    }
-
-                    if (originalOption && originalOption.category) {
-                        Object.entries(archetypes).forEach(([archetype, data]) => {
-                            if (data.keywords.includes(originalOption.category)) {
-                                archetypeRawScores[archetype] = (archetypeRawScores[archetype] || 0) + 2; // Give more weight to single choice answers
-                            }
-                        });
-                    }
-                }
-            });
-
-            // Calculate percentage scores
-            Object.entries(archetypeRawScores).forEach(([archetype, rawScore]) => {
-                const maxScore = maxPossibleScores[archetype];
-                if (maxScore > 0) {
-                    archetypePercentageScores[archetype] = parseFloat(((rawScore / maxScore) * 100).toFixed(1));
-                } else {
-                    archetypePercentageScores[archetype] = 0;
-                }
-            });
-
-            // Determine the best match based on percentage scores
-            let maxPercentage = -1;
-            let bestArchetype = null;
-            Object.entries(archetypePercentageScores).forEach(([archetype, percentage]) => {
-                if (percentage > maxPercentage) {
-                    maxPercentage = percentage;
-                    bestArchetype = archetype;
-                }
-            });
-            bestMatchedArchetype = bestArchetype;
-        }
-
-        // Displays the results modal
-        function showResults() {
-            questionnaireSection.classList.add('hidden');
-            resultsModal.classList.remove('hidden');
-
-            // Display best match
-            if (bestMatchedArchetype) {
-                const bestArchetypeData = archetypes[bestMatchedArchetype];
-                bestMatchSection.innerHTML = `
-                    <div class="flex items-center mb-4">
-                        <img
-                            src="${bestArchetypeData.image}"
-                            alt="${bestMatchedArchetype}"
-                            class="w-24 h-24 object-cover mr-4"
-                            onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=${bestMatchedArchetype.replace(/\s/g, '+')}';"
-                        />
-                        <div class="flex-grow">
-                            <p class="text-sm text-gray-500">Your best match</p>
-                            <h3 class="text-3xl font-bold text-gray-800 leading-tight">${bestMatchedArchetype}</h3>
-                            <p class="text-lg text-gray-600">${bestArchetypeData.moniker}</p>
-                        </div>
-                        <p class="text-5xl font-bold text-gray-700 ml-auto">${archetypePercentageScores[bestMatchedArchetype]}%</p>
-                    </div>
-                    <p class="text-lg text-gray-800 mb-6">${bestArchetypeData.description}</p>
-                    ${bestArchetypeData.link ? `<a href="${bestArchetypeData.link}" target="_blank" class="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">Learn More</a>` : ''}
-                `;
-            }
-
-            // Render Radar Chart
-            if (radarChartInstance) {
-                radarChartInstance.destroy(); // Destroy previous instance if exists
-            }
-            const radarCtx = radarChartCanvas.getContext('2d');
-            radarChartInstance = new Chart(radarCtx, {
-                type: 'radar',
-                data: {
-                    labels: Object.keys(archetypePercentageScores),
-                    datasets: [
-                        {
-                            label: 'Your Archetype Scores',
-                            data: Object.values(archetypePercentageScores),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
-                            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    elements: {
-                        point: {
-                            radius: 3, // Smaller visible dot size
-                            hitRadius: 15, // Increased hit radius for larger hover area
-                            hoverRadius: 8 // Increased hover radius for visual feedback
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: false
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100, // Max for percentage
-                            ticks: {
-                                display: false, // Do not display ticks on the axis
-                                beginAtZero: true,
-                                callback: function(value) {
-                                    return value;
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Removed legend display
-                        },
-                        tooltip: {
-                            callbacks: {
-                                title: function(context) {
-                                    // Display Archetype Name as title
-                                    return context[0].label;
-                                },
-                                label: function(context) {
-                                    // Display percentage as content
-                                    return context.raw + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Removed Display sorted list of archetypes and scores
-            // const sortedArchetypes = Object.entries(archetypePercentageScores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
-            // archetypeListUl.innerHTML = sortedArchetypes.map(([archetype, score]) => `
-            //     <li class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-            //         <span class="text-lg font-medium text-gray-700">${archetype} (${archetypes[archetype]?.moniker})</span>
-            //         <span class="text-xl font-bold text-blue-600">${score}%</span>
-            //     </li>
-            // `).join('');
-        }
-
-        // Resets the questionnaire and hides results modal
-        function restartQuestionnaire() {
-            currentStep = 0;
-            userAnswers = {};
-            archetypeRawScores = {};
-            archetypePercentageScores = {};
-            bestMatchedArchetype = null;
-            if (radarChartInstance) {
-                radarChartInstance.destroy();
-                radarChartInstance = null;
-            }
-            resultsModal.classList.add('hidden');
-            landingPageDiv.classList.remove('hidden'); // Go back to landing page
-            questionnaireSection.classList.add('hidden'); // Ensure questionnaire is hidden
-            // No need to call renderQuestion here, as the landing page is shown
-        }
-
-        // --- Event Listeners ---
-        startQuizButton.addEventListener('click', () => {
-            landingPageDiv.classList.add('hidden');
-            questionnaireSection.classList.remove('hidden');
-            renderQuestion(); // Start the quiz
-        });
-        nextButton.addEventListener('click', nextStep);
-        prevButton.addEventListener('click', prevStep);
-        restartButton.addEventListener('click', restartQuestionnaire);
-
-        // Expose handleOtherTextInput to global scope for inline oninput
-        window.handleOtherTextInput = handleOtherTextInput;
-
-        // Initial state on page load: show landing page, hide questionnaire
-        window.onload = () => {
-            landingPageDiv.classList.remove('hidden');
-            questionnaireSection.classList.add('hidden');
-            resultsModal.classList.add('hidden');
-        };
-    </script>
 </body>
 </html>
